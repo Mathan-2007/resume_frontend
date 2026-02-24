@@ -8,50 +8,54 @@ export default function Login() {
   const [loading, setLoading] = useState(false);
 
   const handleLogin = async (e) => {
-    e.preventDefault();
-    setLoading(true);
+  e.preventDefault();
+  setLoading(true);
 
-    try {
-      // Step 1: Login request
-      const res = await fetch("https://resume-analyzer-8rhy.onrender.com/auth/login", {
+  try {
+    // ✅ LOGIN REQUEST
+    const res = await fetch(
+      "https://resume-analyzer-8rhy.onrender.com/auth/login",
+      {
         method: "POST",
-      });
-
-      const data = await res.json();
-
-      if (!res.ok) {
-        alert(data.detail || "Login failed ❌");
-        setLoading(false);
-        return;
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",   // 🔥 REQUIRED FOR COOKIE
+        body: JSON.stringify({ email, password }),
       }
+    );
 
-      alert(`✅ ${data.message}`);
+    const data = await res.json();
 
-      // Step 2: Verify token from secure cookie
-      const verify = await fetch("https://resume-analyzer-8rhy.onrender.com/auth/verify_token", {
-        method: "GET",
-      });
-
-      if (!verify.ok) {
-        alert("Token verification failed ❌");
-        setLoading(false);
-        return;
-      }
-
-      const verifyData = await verify.json();
-      const role = verifyData.user?.role || "user";
-
-      // Step 3: Redirect based on secure verified role
-      if (role === "admin") navigate("/admin");
-      else if (role === "trainer") navigate("/trainer");
-      else navigate("/user");
-    } catch (err) {
-      console.error(err);
-      alert("Error connecting to server ⚠️");
-    } finally {
-      setLoading(false);
+    if (!res.ok) {
+      alert(data.detail || "Login failed ❌");
+      return;
     }
-  };
+
+    alert(`✅ ${data.message}`);
+
+    // ✅ VERIFY TOKEN (COOKIE SENT AUTOMATICALLY)
+    const verify = await fetch(
+      "https://resume-analyzer-8rhy.onrender.com/auth/verify_token",
+      {
+        method: "GET",
+        credentials: "include",  // 🔥 VERY IMPORTANT
+      }
+    );
+
+    const verifyData = await verify.json();
+    const role = verifyData.user?.role || "user";
+
+    if (role === "admin") navigate("/admin");
+    else if (role === "trainer") navigate("/trainer");
+    else navigate("/user");
+  } catch (err) {
+    console.error(err);
+    alert("Error connecting to server ⚠️");
+  } finally {
+    setLoading(false);
+  }
+};
 
   return (
     <div style={pageStyle}>
