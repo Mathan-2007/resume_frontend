@@ -1,0 +1,13 @@
+fastapi
+uvicorn[standard]
+python-dotenv
+pymongo
+openai
+bcrypt
+certifi
+httpx
+pdfplumber
+beautifulsoup4
+requests
+PyJWT
+python-multipart

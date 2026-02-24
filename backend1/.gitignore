@@ -1,0 +1,9 @@
+# ignore virtual env
+backend1/.venv/
+venv/
+.env
+*.env
+# python caches
+__pycache__/
+*.py[cod]
+.env
