@@ -9,7 +9,7 @@ export default function ProtectedRoute({ allowedRoles = [], children }) {
       try {
         const res = await fetch("https://resume-analyzer-8rhy.onrender.com/auth/verify_token", {
           method: "GET",
-          credentials: "include", // ✅ send cookiess
+          credentials: "include", // ✅ send cookiessa
         });
         if (!res.ok) throw new Error("Token invalid");
 
