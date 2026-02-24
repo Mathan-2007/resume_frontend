@@ -36,7 +36,9 @@ export default function UserDashboard() {
       
       try {
         setLoading(true);
-        const res = await fetch(`${API_BASE}/user/info/${storedEmail}`);
+        const res = await fetch(`${API_BASE}/user/info/${storedEmail}`, {
+  credentials: "include"
+});
         const data = await res.json();
         setUser(data.user);
       } catch (err) {
@@ -56,9 +58,15 @@ export default function UserDashboard() {
     const fetchProfiles = async () => {
       try {
         const [g, l, c] = await Promise.all([
-          fetch(`${API_BASE}/github/${email}`).then(r => r.json()),
-          fetch(`${API_BASE}/leetcode/${email}`).then(r => r.json()),
-          fetch(`${API_BASE}/codechef/${email}`).then(r => r.json()),
+          fetch(`${API_BASE}/github/${email}`, {
+  credentials: "include"
+}).then(r => r.json()),
+          fetch(`${API_BASE}/leetcode/${email}`, {
+  credentials: "include"
+}).then(r => r.json()),
+          fetch(`${API_BASE}/codechef/${email}`, {
+  credentials: "include"
+}).then(r => r.json()),
         ]);
         setGithub(g);
         setLeetcode(l);
@@ -93,9 +101,10 @@ export default function UserDashboard() {
 
     try {
       const response = await fetch(`${API_BASE}/user/upload_resume`, {
-        method: 'POST',
-        body: formData,
-      });
+  method: 'POST',
+  body: formData,
+  credentials: "include"
+});
 
       const result = await response.json();
       
@@ -127,13 +136,14 @@ export default function UserDashboard() {
 
     try {
       const response = await fetch(`${API_BASE}/ai/chat`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          query: userMessage,
-          resume_data: resumeData.data || {}
-        })
-      });
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  credentials: "include",
+  body: JSON.stringify({
+    query: userMessage,
+    resume_data: resumeData.data || {}
+  })
+});
 
       const data = await response.json();
       const aiResponse = {
