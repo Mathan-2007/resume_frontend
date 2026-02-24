@@ -342,7 +342,7 @@ setTimeout(() => clearMsgs(), 2000);
 
 const handleLogout = async () => {
   try {
-    const res = await fetch("http://resume-analyzer-8rhy.onrender.com/auth/logout", {
+    const res = await fetch("https://resume-analyzer-8rhy.onrender.com/auth/logout", {
       method: "POST",
       credentials: "include",
     });

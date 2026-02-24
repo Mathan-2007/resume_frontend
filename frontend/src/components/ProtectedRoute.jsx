@@ -7,7 +7,7 @@ export default function ProtectedRoute({ allowedRoles = [], children }) {
   useEffect(() => {
     const verify = async () => {
       try {
-        const res = await fetch("http://resume-analyzer-8rhy.onrender.com/auth/verify_token", {
+        const res = await fetch("https://resume-analyzer-8rhy.onrender.com/auth/verify_token", {
           method: "GET",
           credentials: "include", // ✅ send cookies
         });

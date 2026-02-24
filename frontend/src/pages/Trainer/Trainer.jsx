@@ -140,7 +140,7 @@ if (filters.departments.length > 0)
 
 
   try {
-    const response = await fetch("http://resume-analyzer-8rhy.onrender.com/admin/filter_uploaded_resumes_stream", {
+    const response = await fetch("https://resume-analyzer-8rhy.onrender.com/admin/filter_uploaded_resumes_stream", {
       method: "POST",
       body: formData,
     });
