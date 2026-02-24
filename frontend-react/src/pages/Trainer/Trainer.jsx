@@ -148,7 +148,6 @@ if (filters.departments.length > 0)
     const reader = response.body.getReader();
     const decoder = new TextDecoder("utf-8");
     let buffer = "";
-    let currentResults = [];
 
     while (true) {
       const { done, value } = await reader.read();
@@ -168,9 +167,10 @@ if (filters.departments.length > 0)
             setTotalFiles(data.total);
 
             if (data.results_so_far) {
-              const newResults = [...data.results_so_far];
-currentResults = newResults;
-setFilters((prev) => ({ ...prev, results: newResults }));
+              setFilters((prev) => ({
+  ...prev,
+  results: [...data.results_so_far],
+}));
             }
           }
 
